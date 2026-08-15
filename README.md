@@ -115,6 +115,19 @@ Arquitetura Efêmera e Serverless (Kubernetes-Native): Não existem executores (
 ---
 
 ## 6. Funcionalidades
+
+É comum, quando se trata de funcionalidades, que elas sejam implementadas para todos os usuários. Com os recursos de sinalização (feature flags), a implantação (deploy) do código ocorre separadamente da liberação (release) para os usuários, sem estar imediatamente visível ou ativo para todos os usuários. Dessa forma, os desenvolvedores podem testar funcionalidades em um ambiente de produção e, somente após a confirmação de que tudo está funcionando corretamente, a funcionalidade pode ser ativada para os usuários. Esse desacoplamento permite implantações mais seguras, menores e mais frequentes (reduzindo o risco de incidentes graves), além de funcionar como um botão de desativação, caso ocorra um erro em produção. 
+
+As features flags funcionam como uma condição lógica que determina se um determinado trecho de código será executado ou não. Elas são divididas em 4 tipos principais: flags de release (usadas para controlar o lançamento de funcionalidades), flags de experimento (utilizadas em testes de comparação de comportamentos ou interfaces), flags operacionais (servem para ativar e desativar recursos em situações urgentes) e flags de permissão (definem o acesso de funcionalidades de acordo com perfis de usuário)
+
+### 6.1. Estratégias de liberação :
+
+- Trunk-Based Development: Os desenvolvedores integram suas alterações diretamente na branch principal múltiplas vezes ao dia. Nessa estratégia, os recursos incompletos ficam escondidos atrás de uma flag.
+- Canary Releases Nível de Aplicação: Diferente do Canary no nível de infraestrutura (roteamento de tráfego de rede), a flag direciona percentuais de usuários na própria camada de software com base em regras de contexto (ex: ID do usuário, e-mail, grupo).
+- Rollback Instantâneo: Se uma falha for detectada em produção, a funcionalidade é desligada alterando uma variável na ferramenta de Feature Management. Não é necessário fazer um novo deploy ou build nem reverter alterações no Git.
+
+---
+
 7. Estratégias de implantação
 8. Mecanismos de aprovação
 
