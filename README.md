@@ -132,10 +132,17 @@ As features flags funcionam como uma condição lógica que determina se um dete
 8. Mecanismos de aprovação
 
 
-- 9. Rollback
+## 9. Rollback
 
-10
+Quando é identificado um bug, problemas de compatibilidade ou interrompimento de um processo crucial no software em desenvolvimento, retornar para a versão mais estável das sprints anteriores pode auxiliar na identificação e correção do bug apresentado, revertendo para o estado do projeto já conhecido pela equipe. [9] Por isso, o _**Rollback**_ é um dos mecanismos implementados no desenvolvimento contínuo de software, permitindo uma válvula de escape para evitar transtornos maiores e/ou riscos à segurança e dados do sistema. 
 
+O _Rollback_ se torna um recurso que oferece aos desenvolvedores uma maneira segura de retornar o projeto para um _backup_ anterior, em casos de erros identificados na _sprint_ mais recente, para que assim seja possível a identificação e correção da funcionalidade com algum tipo de erro ou risco. Porém, em casos de riscos que podem se tratar de pontos mais críticos do sistema, é importante verificar outra medida como alternativa para correção, sendo o _rollback_ a última alternativa para tais ocorrências.
+
+### 9.1 Blue-Green Deployment
+
+Uma das maneiras de controle de versões e updates que melhor permitem o uso do rollback é a Implantação Azul-Verde (**_Blue-Green Deployment_**) [11], que é um modelo de lançamento de aplicações que permite uma transição segura do tráfego de usuários entre versões, sem o risco de queda do sistema, por meio de ambientes de produção. 
+
+Nesta técnica, o ambiente atual com a versão antiga será denominada com uma _flag_ azul, enquanto que a nova versão será implementada em um ambiente com a _flag_ verde. Caso a transição seja bem sucedida, o ambiente azul pode ser retirado da produção, sendo o ambiente verde o novo azul, mas caso precisar, é possível realizar o _rollback_ para a versão antiga, sem risco de queda do software que está sendo usado na ocasião.
 
 ## 10. Monitoramento pós-deploy
 
