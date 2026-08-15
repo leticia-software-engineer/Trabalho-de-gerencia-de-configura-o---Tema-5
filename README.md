@@ -83,8 +83,38 @@ Depois de escolher utilizar CI/CD é preciso saber como utilizar e para isso é 
 
 - f. **AWS Code Pipeline**: Essa ferramenta é integrada com a plataforma de armazenamento em uvem da AWS e permite que o processo de CI e CD seja feito nesse mesmo ambiente possui armazenamento de artefatos baseado em S3 e a infraestrutura é gerenciada pela própria AWS, sendo uma boa escolha para projetos grandes ou que já utilizam a AWS. Algumas desvantagens dessa ferramenta são principalmente voltadas a interface ser pouco intuitiva e alguns problemas de usabilidade como a latência e também o forte acoplamento com a AWS, o que dificulta bastante uma migração para outra plataforma.
 
+---
+
 ## 5. Arquiteturas 
-6. Funcionalidades
+
+A Arquitetura de CI/CD refere-se à organização estrutural e operacional dos sistemas que automatizam a compilação, teste, empacotamento e implantação de software. Ela define como o código flui do repositório até o ambiente final de produção, impactando diretamente a segurança, escalabilidade, tempo de execução e a superfície de ataque da infraestrutura. Com o passar do tempo, as arquiteturas evoluíram de servidores simples para modelos mais avançados, distribuídos e nativos da nuvem.
+
+### 5.1. Modelos arquiteturais de CI/CD:
+
+Arquitetura Push-Based: O servidor de CI/CD (ou runner) escuta eventos do repositório (via webhooks), executa o build, roda os testes e se conecta diretamente ao ambiente de destino para aplicar as alterações.
+> - Fluxo: Git Commit ➔ Servidor CI/CD ➔ Autenticação Externa ➔ Push para Produção
+> - Exemplos: GitHub Actions, GitLab CI, Jenkins, CircleCI, AWS CodePipeline.
+> - Vantagens: Configuração inicial rápida, suporta múltiplos alvos (SaaS, VMs, Bare Metal), visibilidade centralizada do pipeline
+> - Desvantagens: Exige expor portas ou credenciais de produção para o CI, risco de gargalo se os runners forem compartilhados
+> - Caso de uso ideal: Projetos heterogêneos, monorepos, arquiteturas baseadas em VMs e funções Serverless. 
+
+Arquitetura Pull-Based (GitOps): Nenhum sistema externo possui credenciais de acesso ao ambiente final. Em vez disso, um agente ou operador interno (instalado dentro do cluster de destino) monitora continuamente o repositório Git e puxa (pull) o estado desejado, aplicando-o localmente.
+> - Fluxo: Git Commit ➔ Agente Interno (In-Cluster) ➔ Sincronização Local
+> - Exemplos: Argo CD, Flux CD, Fleet.
+> - Vantagens: Sem credenciais expostas para fora, detecção automática de drift (desvio de configuração), rollback trivial apontando para um commit anterior
+> - Desvantagens: Exige que a infraestrutura seja 100% declarativa, curva de aprendizado alta, restrito principalmente a contêineres e Kubernetes
+> - Caso de uso ideal: Ambientes nativos em Kubernetes, arquiteturas de microsserviços altamente reguladas. 
+
+Arquitetura Efêmera e Serverless (Kubernetes-Native): Não existem executores (runners) fixos ligados o tempo todo. Cada etapa do pipeline dispara a criação de um pod ou contêiner temporário isolado em um cluster, que é destruído imediatamente após a conclusão.
+> - Fluxo: orientado a eventos e o ciclo de vida da própria infraestrutura faz parte do fluxo. O pipeline não se conecta a um servidor existente, ele cria o servidor, executa o trabalho e destrói o servidor. 
+> - Exemplos: Tekton Pipelines, Jenkins X.
+> - Vantagens: Isolamento total entre jobs (sem estado residual), uso eficiente de recursos (paga/aloca apenas quando executa), escalabilidade horizontal ilimitada
+> - Desvantagens: Cold start (atraso para subir imagens do runner), gestão complexa de cache entre execuções
+> - Caso de uso ideal: Grandes organizações com centenas de deploys diários e necessidade de isolamento estrito.
+
+---
+
+## 6. Funcionalidades
 7. Estratégias de implantação
 8. Mecanismos de aprovação
 
