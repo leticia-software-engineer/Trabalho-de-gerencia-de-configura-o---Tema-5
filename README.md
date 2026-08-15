@@ -125,7 +125,9 @@ Joaquim Arthur Muniz Leite
 
 José Dhonatan Fernandes de Almeida
 
-José Welton de Sousa Melo Letícia Maria dos Santos Dias
+José Welton de Sousa Melo 
+
+Letícia Maria dos Santos Dias
 
 Sarah Mendes Teles
 
