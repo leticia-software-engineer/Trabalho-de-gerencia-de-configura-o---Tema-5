@@ -154,6 +154,23 @@ Caso de Uso: Refatorações pesadas (ex: troca de linguagem de programação, mi
 
 ## 8. Mecanismos de aprovação
 
+Os Mecanismos de Aprovação (Approval Mechanisms / Quality Gates) no pipeline de CI/CD são os pontos de controle e validação que determinam se o código-fonte pode avançar de uma etapa para outra até atingir o ambiente de produção, funcionando como "barreiras de segurança" (guardrails). Os mecanismos de aprovação garantem a resiliência, conformidade e governança da aplicação, impedindo que falhas de software, vulnerabilidades de segurança ou custos desnecessários cheguem aos usuários.
+
+### 8.1. Classificação dos Mecanismos de Aprovação
+
+Os mecanismos dividem-se em duas categorias fundamentais: Automatizados (baseados em regras e dados) e Manuais (baseados em intervenção humana).
+
+A. Mecanismos Automatizados (Quality Gates & Policy-as-Code): São os mais recomendados para manter a cadência e a velocidade do CI/CD. O pipeline avalia métricas programaticamente e decide se continua ou interrompe a execução sem esperar por ninguém.
+- Gates de Qualidade de Código (SAST/DAST): O pipeline falha automaticamente se ferramentas de análise estática (ex: SonarQube, Checkmarx) identificarem vulnerabilidades críticas ou se a cobertura de testes unitários estiver abaixo de um patamar pré-definido (ex: < 80%).
+- Análise de Segurança na Cadeia de Suprimentos (SCA): Ferramentas como Dependabot, Snyk ou Trivy escaneiam imagens Docker e bibliotecas de terceiros (packages). Se houver uma falha de segurança severa (ex: CVE crítica) registrada no ecossistema, o deploy é bloqueado.
+- Análise de Métricas de Canary (Automated Canary Analysis): Durante uma estratégia de deploy Canary, ferramentas de observabilidade (Prometheus, Datadog) analisam o comportamento da nova versão por X minutos. Se a taxa de erros HTTP 5xx subir acima de 0.1% ou a latência (p99) piorar, o pipeline cancela o deploy e aciona o rollback automaticamente.
+- Governança via Policy-as-Code: Avaliação de políticas declarativas de infraestrutura usando motores como Open Policy Agent (OPA) ou Kyverno. Impede o deploy de contêineres que não sigam regras de conformidade (ex: tentar rodar como usuário root, ausência de limites de memória/CPU definidos ou uso de repositórios de imagem não confiáveis).
+  
+B. Mecanismos Manuais (Manual Approval Gates): Apesar do objetivo final ser a automação ponta a ponta, organizações altamente reguladas (bancos, órgãos governamentais, saúde) ainda utilizam pausas manuais para aprovação técnica, operacional ou de negócios.
+- Aprovação de Ambiente (Environment Protection Rules): Pausas configuradas na plataforma de CI/CD que exigem que um ou mais aprovadores credenciados revisem a alteração e cliquem em um botão de liberação no painel.
+- Aprovação de Custos e Infraestrutura: Em ferramentas de IaC (Infrastructure as Code, como Terraform e OpenTofu), a geração do plano (terraform plan) pausa a execução para que um engenheiro valide as mudanças e custos estimados antes de executar a aplicação real (terraform apply).
+- Integração com Ferramentas de ITSM (Change Management): A pipeline faz uma requisição via API para um sistema como ServiceNow ou Jira Service Management, cria uma Solicitação de Mudança (RFC) e aguarda até que o ticket mude para o status "Aprovado" pelo comitê de controle de mudanças (CAB).
+
 ---
 
 ## 9. Rollback
