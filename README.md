@@ -222,3 +222,16 @@ Sarah Mendes Teles
 [4] What is Jenkins? A Guide to CI/CD. Cloudbees.comCloudBees, , 10 dez. 2025. Disponível em: <https://www.cloudbees.com/blog/what-is-jenkins>. Acesso em: 15 ago. 2026 [URL 🔗](https://www.cloudbees.com/blog/what-is-jenkins)
 
 [5] GitHub Actions: o que é, como funciona e boas práticas! Disponível em: <https://focusnfe.com.br/blog/github-actions/>. Acesso em: 15 ago. 2026. [URL 🔗](https://focusnfe.com.br/blog/github-actions/)
+
+[6] DEVOPS. Red Hat, [s.d.]. Disponível em: https://www.redhat.com/pt-br/topics/devops. Acesso em: 15 ago. 2026. 
+
+[7] CI/CD vs DevOps | Implementation Best Practices. LaunchDarkly, 31 maio 2024. Disponível em: https://launchdarkly.com/blog/devops-vs-cicd/. Acesso em: 15 ago. 2026. 
+
+[8] SOUZA, Gabriel. Feature Flags: Conceitos, Benefícios e Boas Práticas. Medium, 17 jan. 2026. Disponível em: https://medium.com/@gabweb95/feature-flag-conceitos-benef%C3%ADcios-e-boas-pr%C3%A1ticas-51461c1d8302. Acesso em: 15 ago. 2026. 
+
+[9] IBSEC, Equipe. Rollback: O que é e como funciona no Git. IBSEC, 7 ago. 2025. Disponível em: <https://ibsec.com.br/rollback-o-que-e-e-como-funciona-no-git/>. Acesso em: 15 ago. 2026 
+
+[10] Harness. Understanding rollbacks in software development. Disponível em: <https://www.harness.io/blog/understanding-software-rollbacks>. Acesso em: 15 ago. 2026. 
+
+[11] Red Hat. O que é implantação azul-verde? Disponível em: <https://www.redhat.com/pt-br/topics/devops/what-is-blue-green-deployment>. Acesso em: 15 ago. 2026. 
+
