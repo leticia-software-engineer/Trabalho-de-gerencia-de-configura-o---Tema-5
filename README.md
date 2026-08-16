@@ -165,12 +165,21 @@ Tais métricas são monitoradas com o auxílio de ambientes e dashboards apresen
 
 ---
 
-
-
 ## 11. Cenários de utilização
 
-12
+Com isso, a pipeline de entrega e implantação contínua é uma ferramenta importante para o gerenciamento da equipe no desenvolvimento de sistemas voláteis, que necessitam de constantes atualizações e feedbacks, além de efetuar testes automatizados complexos e implantações no ambiente de nuvem, com a possibilidade de escalonamento e alto tráfego de usuários. 
 
+Os principais cenários de uso do ecossistema abrangido são:
+
+- Aplicações Cloud Native;
+- Aplicações Web;
+- Aplicações SaaS (Software as a Service);
+- Microsserviços;
+- Aplicativos Móveis.
+
+Esses softwares exigem constantes testes e atualizações em seu fluxo de desenvolvimento, por lidarem com arquiteturas complexas e alto tráfego de dados e usuários. Dessa forma, o pipeline CI/CD se torna uma ferramenta útil para tais casos de uso.
+
+---
 
 ## 12. Nosso exemplo prático
 
