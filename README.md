@@ -120,7 +120,7 @@ Arquitetura Efêmera e Serverless (Kubernetes-Native): Não existem executores (
 
 As features flags funcionam como uma condição lógica que determina se um determinado trecho de código será executado ou não. Elas são divididas em 4 tipos principais: flags de release (usadas para controlar o lançamento de funcionalidades), flags de experimento (utilizadas em testes de comparação de comportamentos ou interfaces), flags operacionais (servem para ativar e desativar recursos em situações urgentes) e flags de permissão (definem o acesso de funcionalidades de acordo com perfis de usuário)
 
-### 6.1. Estratégias de liberação :
+### 6.1. Estratégias de liberação:
 
 - Trunk-Based Development: Os desenvolvedores integram suas alterações diretamente na branch principal múltiplas vezes ao dia. Nessa estratégia, os recursos incompletos ficam escondidos atrás de uma flag.
 - Canary Releases Nível de Aplicação: Diferente do Canary no nível de infraestrutura (roteamento de tráfego de rede), a flag direciona percentuais de usuários na própria camada de software com base em regras de contexto (ex: ID do usuário, e-mail, grupo).
@@ -128,8 +128,31 @@ As features flags funcionam como uma condição lógica que determina se um dete
 
 ---
 
-7. Estratégias de implantação
-8. Mecanismos de aprovação
+## 7. Estratégias de implantação
+
+As Estratégias de Implantação definem a metodologia pela qual uma nova versão de um software substitui a versão antiga em um ambiente de produção. O principal objetivo de analisar e escolher a melhor estratégia é minimizar ou até mesmo eliminar o tempo de inatividade (downtime), reduzir o risco de falhas e permitir uma reversão rápida (rollback) caso ocorra algum problema. Diferente do Feature Management (que ocorre na camada lógica da aplicação), as estratégias de implantação operam na camada de infraestrutura e roteamento de rede (Load Balancers, Ingress Controllers, DNS, Orquestradores de Contêineres).
+
+### 7.1. Principais Estratégias de Implantação
+
+- Recreate (Recriação): É uma abordagem mais simples e bruta. Nela todas as instâncias da versão antiga (V1) são destruídas simultaneamente antes que as instâncias da nova versão (V2) sejam provisionadas.
+Mecanismo: Derruba V1 ➔ Espera ➔ Sobe V2
+Caso de Uso: Em aplicações legadas, ambientes de desenvolvimento ou quando há alterações estruturais no banco de dados que não suportam duas versões rodando ao mesmo tempo.
+- Rolling Update (Atualização Progressiva / Ramped): Esse modelo propõe a substituição das instâncias antigas por novas de forma gradual, uma a uma ou em pequenos lotes. É o padrão nativo do Kubernetes (Deployment).
+Mecanismo: Sobe 1x V2 ➔ Valida ➔ Derruba 1x V1 ➔ Repete até 100%
+Caso de Uso: Em aplicações stateless (sem estado) onde a V1 e a V2 são totalmente compatíveis e podem coexistir acessando o mesmo banco de dados temporariamente.
+- Blue-Green (Red-Black): Mantém dois ambientes de infraestrutura idênticos. O ambiente Blue hospeda a versão atual de produção. O ambiente Green recebe o deploy da nova versão. Os testes são feitos no Green, se aprovados, o balanceador de carga redireciona 100% do tráfego do Blue para o Green instantaneamente.
+Mecanismo: Deploy no Green ➔ Testes em Produção Invisível ➔ Troca o Roteamento (Switch)
+Caso de Uso: Em sistemas críticos que não toleram downtime e precisam de um rollback imediato (basta voltar o tráfego para o Blue).
+- Canary Deployment (Canário): A nova versão (V2) é liberada para uma pequena porcentagem do tráfego real. Se as métricas de erro (logs, latência, health checks) permanecerem estáveis, o tráfego é ampliado gradativamente (10%, 25%, 50%, 100%).
+Mecanismo: V2 recebe 5% do tráfego ➔ Análise de Métricas ➔ Escala para 100%
+Caso de Uso: Para grandes plataformas B2C (Netflix, Amazon, Google) onde testes sintéticos não cobrem todos os comportamentos imprevisíveis dos usuários.
+- Shadow Deployment (Dark Launching): O tráfego real dos usuários que chega na versão antiga (V1) é espelhado (duplicado) para a nova versão (V2) nos bastidores. A V2 processa as requisições, mas suas respostas são descartadas. O usuário só recebe a resposta da V1.
+Mecanismo: Tráfego na V1 ➔ Fork assíncrono para V2 ➔ Comparação de resultados e performance
+Caso de Uso: Refatorações pesadas (ex: troca de linguagem de programação, migração de banco de dados) onde você precisa provar que a nova versão suporta a carga e gera os mesmos resultados.
+
+---
+
+## 8. Mecanismos de aprovação
 
 ---
 
