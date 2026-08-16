@@ -151,7 +151,20 @@ Nesta técnica, o ambiente atual com a versão antiga será denominada com uma _
 
 ## 10. Monitoramento pós-deploy
 
-11
+Para além das implantações e desenvolvimento contínuo proposto pela pipeline CI/CD, também se faz necessário acompanhar e monitorar as métricas de desempenho e produção do software, assim como a saúde do sistema e do processo em andamento da equipe de desenvolvimento, para que assim não se reflita no produto final possíveis atrasos e dívidas técnicas.
+
+Conforme definido no artigo publicado pelo portal Splunk [12], é necessário as equipes monitorarem as seguintes métricas no fluxo de trabalho de CI/CD, garantindo uma rápida identificação de sinais críticos e oportunidades de otimização:
+
+- Frequência / Tempo de implantação;
+- Prazo de Execução de Alterações;
+- Tempo médio para recuperar / resolver um erro de produção;
+- Taxa de falha em alterações;
+- Tempo de espera de alterações do sistema na pipeline.
+
+Tais métricas são monitoradas com o auxílio de ambientes e dashboards apresentados anteriormente (Jenkins, Github Actions, Gitlab CI), podendo ser analisado e discutido pela equipe como um todo.
+
+---
+
 
 
 ## 11. Cenários de utilização
