@@ -275,3 +275,13 @@ Sarah Mendes Teles
 
 [11] Red Hat. O que é implantação azul-verde? Disponível em: <https://www.redhat.com/pt-br/topics/devops/what-is-blue-green-deployment>. Acesso em: 15 ago. 2026. 
 
+[12] INTRODUCTION to quality gates. Sonar Documentation, [s.d.]. Disponível em: https://docs.sonarsource.com/sonarqube-server/quality-standards-administration/managing-quality-gates/introduction-to-quality-gates. Acesso em: 15 ago. 2026. 
+
+[13] PROTECTED environments. GitLab Docs, [s.d.]. Disponível em: https://docs.gitlab.com/ci/environments/protected_environments/. Acesso em: 15 ago. 2026. 
+
+[14] DEPLOYMENT strategies. AWS Documentation, [s.d.]. Disponível em: https://docs.aws.amazon.com/whitepapers/latest/introduction-devops-aws/deployment-strategies.html. Acesso em: 15 ago. 2026. 
+
+[15] DEPLOYMENTS. Kubernetes Documentation, [s.d.]. Disponível em: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/. Acesso em: 16 ago. 2026. 
+
+[11] Red Hat. O que é implantação azul-verde? Disponível em: <https://www.redhat.com/pt-br/topics/devops/what-is-blue-green-deployment>. Acesso em: 15 ago. 2026. 
+
