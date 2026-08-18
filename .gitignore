@@ -1,0 +1,9 @@
+/target
+/.venv
+__pycache__/
+*.pyc
+.DS_Store
+*.so
+*.pyd
+dist/
+roteiro.md
