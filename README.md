@@ -229,6 +229,8 @@ Esta estrutura de projeto permite mitigar falhas de implementação verificando 
 
 Além do fluxo automatizado, a implementação aborda artifícios de aprovação, estratégias de implantação, _rollback_ e posterior monitoramento _pós-deploy_, permitindo a alteração de forma controlada, organizada e a identificação de falhas de maneira eficiente. Desta maneira, o exemplo prático demonstra empiricamente a conjuntura complementar dos princípios de Integração Contínua, Entrega Contínua e Implantação Contínua apresentadas.
 
+Por motivos dos exemplos serem muitos extensos, sera linkado aqui a página da wiki contendo eles:
+
 ## 13. Conclusão
 
 Por fim, observa-se por meio do estudo teórico e aplicações práticas que a arquitetura de Entrega e Implantação Contínua de software vem sendo um dos modelos mais utilizados e bem estruturados, impulsionando o fluxo de desenvolvimento de sistemas que necessitam de atualizações frequentes, sem perder a eficiência, segurança e usabilidade para os usuários. 
