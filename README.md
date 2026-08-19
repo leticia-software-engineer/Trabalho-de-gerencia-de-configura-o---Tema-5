@@ -223,6 +223,11 @@ Esses softwares exigem constantes testes e atualizações em seu fluxo de desenv
 
 ## 12. Nosso exemplo prático
 
+A implementação estrutura-se a partir da definição do fluxo de CI/CD apresentada, sendo voltada à automação e padronização do ciclo de desenvolvimento de um software. Este processo integra as distintas etapas de versionamento (aplicadas na plataforma GitHub), construção, testes de validação e implantação. 
+Esta estrutura de projeto permite mitigar falhas de implementação verificando a qualidade de quaisquer alterações antes de sua disponibilização ao público usuário, sendo estas etapas organizadas visando mitigar desfalques, trazer rastreabilidade e proporcional maior agilidade ao fluxo da entrega de software.
+
+Além do fluxo automatizado, a implementação aborda artifícios de aprovação, estratégias de implantação, _rollback_ e posterior monitoramento _pós-deploy_, permitindo a alteração de forma controlada, organizada e a identificação de falhas de maneira eficiente. Desta maneira, o exemplo prático demonstra empiricamente a conjuntura complementar dos princípios de Integração Contínua, Entrega Contínua e Implantação Contínua apresentadas.
+
 13
 
 
