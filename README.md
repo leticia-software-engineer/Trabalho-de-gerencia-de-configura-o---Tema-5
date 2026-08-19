@@ -224,16 +224,16 @@ Esses softwares exigem constantes testes e atualizações em seu fluxo de desenv
 ## 12. Nosso exemplo prático
 
 A implementação estrutura-se a partir da definição do fluxo de CI/CD apresentada, sendo voltada à automação e padronização do ciclo de desenvolvimento de um software. Este processo integra as distintas etapas de versionamento (aplicadas na plataforma GitHub), construção, testes de validação e implantação. 
-Esta estrutura de projeto permite mitigar falhas de implementação verificando a qualidade de quaisquer alterações antes de sua disponibilização ao público usuário, sendo estas etapas organizadas visando mitigar desfalques, trazer rastreabilidade e proporcional maior agilidade ao fluxo da entrega de software.
+
+Esta estrutura de projeto permite mitigar falhas de implementação verificando a qualidade de quaisquer alterações antes de sua disponibilização ao público usuário, sendo estas etapas organizadas visando mitigar desfalques, trazer rastreabilidade e proporcionar maior agilidade ao fluxo da entrega de software.
 
 Além do fluxo automatizado, a implementação aborda artifícios de aprovação, estratégias de implantação, _rollback_ e posterior monitoramento _pós-deploy_, permitindo a alteração de forma controlada, organizada e a identificação de falhas de maneira eficiente. Desta maneira, o exemplo prático demonstra empiricamente a conjuntura complementar dos princípios de Integração Contínua, Entrega Contínua e Implantação Contínua apresentadas.
 
-13
+## 13. Conclusão
 
+Por fim, observa-se por meio do estudo teórico e aplicações práticas que a arquitetura de Entrega e Implantação Contínua de software vem sendo um dos modelos mais utilizados e bem estruturados, impulsionando o fluxo de desenvolvimento de sistemas que necessitam de atualizações frequentes, sem perder a eficiência, segurança e usabilidade para os usuários. 
 
-- 13. Conclusão
-
-14
+Dessa forma, com o CI/CD, utilizando os auxílios de Sistemas de Dashboards e Repositórios de Versionamento, é possível estruturar uma equipe de desenvolvimento que realiza entregas ao mesmo tempo em que verificam e validam de ponta-a-ponta, tornando a implementação eficiente, frequente e que acompanha as demandas do mercado de tecnologia.
 
 ---
 
