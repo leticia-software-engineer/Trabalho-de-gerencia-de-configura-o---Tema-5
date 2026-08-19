@@ -248,8 +248,6 @@ Joaquim Arthur Muniz Leite
 José Dhonatan Fernandes de Almeida
 
 José Welton de Sousa Melo 
-- Github: @jweltu
-- Lattes: http://lattes.cnpq.br/4907634044510168
 
 Letícia Maria dos Santos Dias
 
