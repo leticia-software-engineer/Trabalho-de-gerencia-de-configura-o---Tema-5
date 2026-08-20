@@ -1,0 +1,35 @@
+# buildspec.yml — usado pelo AWS CodeBuild, que é a "etapa de teste"
+# dentro do AWS CodePipeline. O CodePipeline em si não usa YAML de app;
+# ele é definido via Console, CloudFormation/Terraform ou CDK, orquestrando
+# estágios (Source -> Build -> Deploy) que apontam para outros serviços.
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+    commands:
+      - echo "Instalando dependências (Build)..."
+      - pip install -r requirements.txt
+
+  build:
+    commands:
+      - echo "Executando testes (Test)..."
+      - pytest --junitxml=resultados.xml --cov=app
+
+  post_build:
+    commands:
+      - echo "Empacotando artefato..."
+      - zip -r app-build.zip app.py requirements.txt
+
+artifacts:
+  files:
+    - app-build.zip
+    - resultados.xml
+
+reports:
+  pytest-reports:
+    files:
+      - resultados.xml
+    file-format: JUNITXML

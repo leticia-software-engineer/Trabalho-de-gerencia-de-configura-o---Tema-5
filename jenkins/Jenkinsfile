@@ -1,0 +1,101 @@
+// Jenkinsfile — Pipeline declarativo do Jenkins
+// Etapas: Checkout -> Build -> Test -> Análise SonarQube -> Implantação -> Ações Pós-Implantação
+
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3.9'   // nome configurado em Manage Jenkins > Tools
+        jdk 'JDK 17'
+    }
+
+    environment {
+        SONARQUBE_ENV = 'SonarQube'   // nome do servidor configurado em Manage Jenkins > System
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Baixando o código mais recente do repositório GitHub...'
+                checkout scm
+                // Equivalente a configurar o repositório GitHub como Source na
+                // definição do pipeline (Pipeline script from SCM).
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Construindo a aplicação a partir de um estado limpo...'
+                // Por ora, apenas o backend foi implementado para facilitar os testes.
+                // Em projetos maiores, recomenda-se separar back-end e front-end
+                // em estágios (e agentes) distintos.
+                sh 'mvn clean install'
+                // clean   -> remove builds anteriores
+                // install -> compila o código-fonte, executa os testes, empacota
+                //            a aplicação e instala o artefato no repositório Maven local
+
+                /* Caso o front-end (Angular) seja implementado futuramente:
+                dir('frontend') {
+                    sh 'npm install'
+                    sh 'ng build --configuration production'
+                }
+                */
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Executando testes automatizados para garantir correção e estabilidade do código...'
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    // Publica os relatórios de teste gerados pelo Maven (Surefire)
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Análise com SonarQube') {
+            steps {
+                echo 'Analisando a base de código: qualidade, vulnerabilidades e manutenibilidade...'
+                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+
+        stage('Implantação') {
+            when {
+                // Só implanta se todas as etapas anteriores tiverem sido bem-sucedidas
+                expression { currentBuild.currentResult == 'SUCCESS' }
+            }
+            steps {
+                echo 'Preparando a aplicação para implantação...'
+                sh 'echo "Implantação realizada (exemplo)"'
+                // Aqui entraria o comando/script real de deploy
+                // (ex: docker build/push, deploy em servidor, Kubernetes, etc.)
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Executando ações pós-implantação...'
+            archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
+            // Arquivamento do artefato final gerado pelo build
+        }
+        success {
+            echo 'Pipeline concluído com sucesso. Enviando notificação de sucesso...'
+            // Aqui entraria a notificação real (e-mail, Slack, Teams, etc.)
+        }
+        failure {
+            echo 'Pipeline falhou em alguma etapa. Enviando notificação de falha...'
+        }
+        cleanup {
+            echo 'Limpando o workspace...'
+            cleanWs()
+        }
+    }
+}

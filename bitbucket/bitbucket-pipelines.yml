@@ -1,0 +1,40 @@
+# bitbucket-pipelines.yml — Pipeline do Bitbucket
+# Etapas: build+test -> artefato -> deploy (com aprovação por ambiente)
+
+image: python:3.12-slim
+
+pipelines:
+  default:
+    - step:
+        name: Build e Test
+        caches:
+          - pip
+        script:
+          - pip install -r requirements.txt
+          - pytest --junitxml=resultados.xml --cov=app
+        artifacts:
+          - resultados.xml
+
+  branches:
+    main:
+      - step:
+          name: Build e Test
+          script:
+            - pip install -r requirements.txt
+            - pytest --junitxml=resultados.xml --cov=app
+          artifacts:
+            - resultados.xml
+
+      - step:
+          name: Gerar Artefato
+          script:
+            - zip -r app-build.zip app.py requirements.txt
+          artifacts:
+            - app-build.zip
+
+      - step:
+          name: Deploy Produção
+          deployment: production   # cria um gate de aprovação manual no Bitbucket
+          trigger: manual
+          script:
+            - echo "Implantando app-build.zip em produção..."

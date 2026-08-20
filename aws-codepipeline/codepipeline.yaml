@@ -1,0 +1,85 @@
+# codepipeline.yaml — CloudFormation definindo o AWS CodePipeline
+# Estágios: Source -> Build/Test (via CodeBuild + buildspec.yml) -> Aprovação manual -> Deploy
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Pipeline CI/CD simplificado com AWS CodePipeline
+
+Resources:
+
+  AppPipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      Name: pipeline-app-exemplo
+      RoleArn: !GetAtt PipelineRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: !Ref ArtifactBucket
+      Stages:
+
+        - Name: Source
+          Actions:
+            - Name: PegarCodigo
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Provider: CodeStarSourceConnection
+                Version: '1'
+              Configuration:
+                ConnectionArn: !Ref RepoConnectionArn
+                FullRepositoryId: "sua-org/seu-repo"
+                BranchName: main
+              OutputArtifacts:
+                - Name: CodigoFonte
+
+        - Name: BuildETeste
+          Actions:
+            - Name: RodarBuildspec
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: '1'
+              Configuration:
+                ProjectName: !Ref BuildProject
+              InputArtifacts:
+                - Name: CodigoFonte
+              OutputArtifacts:
+                - Name: ArtefatoApp
+
+        - Name: AprovacaoManual
+          Actions:
+            - Name: AprovarProducao
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Provider: Manual
+                Version: '1'
+              # Gate de aprovação: alguém precisa aprovar antes de ir pra produção
+
+        - Name: Deploy
+          Actions:
+            - Name: ImplantarProducao
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CodeDeploy
+                Version: '1'
+              Configuration:
+                ApplicationName: app-exemplo
+                DeploymentGroupName: producao
+                # CodeDeploy faz rollback automático se o health check falhar
+              InputArtifacts:
+                - Name: ArtefatoApp
+
+  BuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: build-teste-app
+      ServiceRole: !GetAtt PipelineRole.Arn
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: buildspec.yml
+      Environment:
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/standard:7.0
+        ComputeType: BUILD_GENERAL1_SMALL
