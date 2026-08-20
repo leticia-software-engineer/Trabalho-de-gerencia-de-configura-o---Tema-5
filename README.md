@@ -230,6 +230,8 @@ Esta estrutura de projeto permite mitigar falhas de implementação verificando 
 Além do fluxo automatizado, a implementação aborda artifícios de aprovação, estratégias de implantação, _rollback_ e posterior monitoramento _pós-deploy_, permitindo a alteração de forma controlada, organizada e a identificação de falhas de maneira eficiente. Desta maneira, o exemplo prático demonstra empiricamente a conjuntura complementar dos princípios de Integração Contínua, Entrega Contínua e Implantação Contínua apresentadas.
 
 Por motivos dos exemplos serem muitos extensos, sera linkado aqui a página da wiki contendo eles:
+https://github.com/leticia-software-engineer/Trabalho-de-gerencia-de-configura-o---Tema-5/wiki
+[Link da Wiki]([https://exemplo.com](https://github.com/leticia-software-engineer/Trabalho-de-gerencia-de-configura-o---Tema-5/wiki))
 
 ## 13. Conclusão
 
